@@ -129,12 +129,10 @@ def numbers_to_strings(op): #switch case based on user's option
         case _:
             return "unknow command - please, do it again" 
 
-
 def main():
     ### reading user's option on how to create the GUI-based mutants
     op = sys.argv[1]
     print(numbers_to_strings(op))  
-
 
 ##calling our main
 if __name__== "__main__":
