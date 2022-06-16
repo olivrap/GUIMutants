@@ -32,12 +32,13 @@ def saveMO(filePath, MOName, MOCode, count):
     root = path.parent.absolute()
     dir = MOName
     pathRew = os.path.join(root, dir)
-    if (pathRew)
+    
     try:
-        os.mkdir(pathRew)
+        if (count==1):
+            os.mkdir(pathRew)
     except FileExistsError:
-        # directory is already created
-        print("Directory " , pathRew ,  " already exists")
+            # directory is already created
+            print("Directory " , pathRew ,  " already exists")
     try: 
         fileMO = pathRew+"/"+str(count)+filename
         mo_File = open(fileMO, "w")
@@ -66,6 +67,7 @@ def rew(writtenCode): #mutant generation for REW mutant operators
 def numbers_to_strings(op): #switch case based on user's option
     match op:
         case "all":
+            rew(code)
             print("-- all of the Mutant operators are being applied --")
             return "implement all of the mutant operators"
         case "rew": #GUI mutant operators 01
