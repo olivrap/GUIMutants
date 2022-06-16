@@ -5,4 +5,4 @@ root = tk.Tk()
 root.withdraw()
 
 
-file_path = filedialog.askopenfilename()
+file_path = filedialog.askopenfilename("Select the file to be muted")
