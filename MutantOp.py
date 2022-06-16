@@ -30,7 +30,8 @@ def replacer(s, newstring, index, nofail=False):
     return s[:index] + newstring + s[index + 1:]
 
 
-def saveMO(filePath, MOName, MOCode):
+def saveMO(filePath, MOName, MOCode, count):
+    filename = os.path.basename(filePath) 
     from pathlib import Path
     path = Path(filePath)
     root = path.parent.absolute()
@@ -42,7 +43,7 @@ def saveMO(filePath, MOName, MOCode):
         print("Directory " , pathRew ,  " already exists")
 
     try: 
-        fileMO = pathRew+"/MyFile.java"
+        fileMO = pathRew+"/"+str(count)+filename
         mo_File = open(fileMO, "w")
         mo_File.write(MOCode)
     except Exception:
@@ -57,15 +58,36 @@ def saveMO(filePath, MOName, MOCode):
 
 
 def rew(writtenCode):
-    initialPos = 0
-    finalPos = len(writtenCode)
+    
+    if writtenCode.find("add("):
+        count = 1;
+        initialPos = writtenCode.find("add(")-1
+        finalPos = len(writtenCode)
 
-    print ("Initial Position ", initialPos)
-    print ("Final Position ", finalPos)
+        while (-1 != writtenCode.find(".add(", initialPos, finalPos)):
+            ## print("Achei", writtenCode.find(".add", initialPos, finalPos))
+            pos = writtenCode.find(".add(", initialPos, finalPos)
+            lastLine = writtenCode.rfind('\n', 0, pos)
+            newString = replacer(writtenCode, "\n\t//", lastLine)
+            saveMO(file_path, "rew", newString, count)
+            count +=1;
+            initialPos = 1+writtenCode.find(".add(", initialPos, finalPos)
+                  
+       # initialPos = writtenCode.rfind('\n', 0, pos)
+    else:
+        print("No mutants created to REW")
+
+"""
+    while writtenCode.rfind('\n', 0, pos):
+        pos = writtenCode.find("add")
+        num += 1
+        print("Ocorrencia ", num)
+        initialPos = pos
+        
 
     if writtenCode.find("add"):
         print("yes, we can")
-        pos = writtenCode.find("add");
+        pos = writtenCode.find("add")
         lastLine = writtenCode.rfind('\n', 0, pos)
         print("Position ", pos)
         print("Last bn", lastLine)
@@ -79,7 +101,7 @@ def rew(writtenCode):
     #criar uma pasta (se já existir, sobrescrever)
     #salvar os códigos mutados
     #fechar a pasta
-
+"""
 
 def numbers_to_strings(op):
     match op:
